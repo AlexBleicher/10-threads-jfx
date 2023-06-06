@@ -30,7 +30,7 @@ public class Waiter implements Runnable {
 				e.printStackTrace();
 			}
 			progressReporter.updateProgress();
-		} while (kitchenHatch.getOrderCount() > 0 || kitchenHatch.getDishesCount()>0);
+		} while (kitchenHatch.getOrderCount() > 0 || kitchenHatch.getDishesCount()>0||kitchenHatch.getCooksCurrentlyWorking()>0);
 		System.out.println(name +" finished. BYEEEEE");
 		progressReporter.notifyWaiterLeaving();
 	}

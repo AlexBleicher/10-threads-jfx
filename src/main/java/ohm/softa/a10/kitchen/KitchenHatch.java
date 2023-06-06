@@ -64,4 +64,6 @@ public interface KitchenHatch {
 	 * @return total count of dishes
 	 */
 	int getDishesCount();
+
+	int getCooksCurrentlyWorking();
 }

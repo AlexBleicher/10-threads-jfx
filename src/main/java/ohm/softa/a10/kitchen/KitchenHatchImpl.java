@@ -11,6 +11,12 @@ public class KitchenHatchImpl implements KitchenHatch{
 	private Deque<Order> orderDeque;
 	private Deque<Dish> dishDeque=new ArrayDeque<>();
 
+	private int cooksCurrentlyWorking=0;
+
+	public int getCooksCurrentlyWorking() {
+		return cooksCurrentlyWorking;
+	}
+
 	public KitchenHatchImpl(int maxDishes, Deque<Order> orderDeque) {
 		this.maxDishes = maxDishes;
 		this.orderDeque = orderDeque;
@@ -25,6 +31,7 @@ public class KitchenHatchImpl implements KitchenHatch{
 	public Order dequeueOrder(long timeout) {
 		synchronized (this) {
 			if(orderDeque.size()>=1) {
+				cooksCurrentlyWorking++;
 				return orderDeque.pop();
 			}
 		}
@@ -66,6 +73,7 @@ public class KitchenHatchImpl implements KitchenHatch{
 				}
 			}
 			dishDeque.add(m);
+			cooksCurrentlyWorking--;
 			dishDeque.notifyAll();
 		}
 	}
