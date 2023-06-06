@@ -44,7 +44,7 @@ public class MainController implements Initializable {
 			orders.add(new Order(nameGenerator.getRandomDish()));
 		}
 		//TODO assign an instance of your implementation of the KitchenHatch interface
-		this.kitchenHatch = new KitchenHatchImpl(10, orders);
+		this.kitchenHatch = new KitchenHatchImpl(KITCHEN_HATCH_SIZE, orders);
 		this.progressReporter = new ProgressReporter(kitchenHatch, COOKS_COUNT, WAITERS_COUNT, ORDER_COUNT, KITCHEN_HATCH_SIZE);
 
 	}
@@ -57,14 +57,17 @@ public class MainController implements Initializable {
 		cooksBusyIndicator.progressProperty().bind(this.progressReporter.cooksBusyProperty());
 
 		/* TODO create the cooks and waiters, pass the kitchen hatch and the reporter instance and start them */
-		Cook cook = new Cook("Hans", progressReporter, kitchenHatch);
-		Thread t1 = new Thread(cook);
-		t1.start();
-		Waiter waiter1 = new Waiter("Jimmy", progressReporter, kitchenHatch);
-		Thread t2 = new Thread(waiter1);
-		t2.start();
-		Waiter waiter2 = new Waiter("Lazy Joe", progressReporter, kitchenHatch);
-		Thread t3 = new Thread(waiter2);
-		t3.start();
+
+		for(int i=0; i<COOKS_COUNT; i++){
+			Cook c = new Cook("Koch" + i, progressReporter, kitchenHatch);
+			Thread t = new Thread(c);
+			t.start();
+		}
+
+		for(int i=0; i<WAITERS_COUNT; i++){
+			Waiter w = new Waiter("Waiter"+i, progressReporter, kitchenHatch);
+			Thread t=new Thread(w);
+			t.start();
+		}
 	}
 }

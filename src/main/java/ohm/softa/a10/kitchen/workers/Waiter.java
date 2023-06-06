@@ -23,15 +23,15 @@ public class Waiter implements Runnable {
 		Random r = new Random();
 		Dish dishToServe;
 		do {
-			System.out.println("Hello?");
 			dishToServe = kitchenHatch.dequeueDish();
 			try {
-				Thread.sleep(r.nextInt(1000));
+				Thread.sleep(r.nextInt(10000));
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 			progressReporter.updateProgress();
-		} while (kitchenHatch.getOrderCount() > 0 || dishToServe != null);
+		} while (kitchenHatch.getOrderCount() > 0 || kitchenHatch.getDishesCount()>0);
+		System.out.println(name +" finished. BYEEEEE");
 		progressReporter.notifyWaiterLeaving();
 	}
 }
