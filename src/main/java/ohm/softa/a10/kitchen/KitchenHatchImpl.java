@@ -50,7 +50,7 @@ public class KitchenHatchImpl implements KitchenHatch{
 		synchronized (dishDeque) {
 			while(dishDeque.size() ==0){
 				try {
-					dishDeque.wait();
+					dishDeque.wait(timeout);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
